@@ -14,7 +14,10 @@ class GoogleLoginView(SocialLoginView):
 
 
 class TestApiView(generics.GenericAPIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        print(user)
+
         return Response({'message': 'Hello, World!'}, status=status.HTTP_200_OK)

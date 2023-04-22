@@ -12,7 +12,7 @@ class CustomUserModelSerializer(ModelSerializer):
             'userId',
             'username',
             'email',
-            'password',
+            'is_configured',
         ]
 
     def create(self, validated_data):

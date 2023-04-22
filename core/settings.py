@@ -60,7 +60,9 @@ INSTALLED_APPS = [
 
     # LOCAL APPS
     'apps.user',
-    # 'apps.identify',
+    'apps.identify',
+    # 'apps.backpack',
+    # 'apps.home',
 
 ]
 
@@ -78,8 +80,6 @@ SOCIALACCOUNT_PROVIDERS = {
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
-REST_USE_JWT = True
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -93,17 +93,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'UPDATE_LAST_LOGIN': True,
-    'USER_ID_FIELD': 'userId',
-    'USER_ID_CLAIM': 'user_id',
-    'SIGNING_KEY': os.environ.get('JWT_SECRET_KEY'),
-}
 
 
 CSRF_TRUSTED_ORIGINS = [
@@ -143,14 +132,44 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 AUTH_USER_MODEL = 'user.CustomUserModel'
 
-
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': True,
+    'USER_ID_FIELD': 'userId',
+    'USER_ID_CLAIM': 'user_id',
+    'SIGNING_KEY': os.environ.get('JWT_SECRET_KEY'),
+    'AUTH_HEADER_TYPES': ('Bearer', ),
+
+}
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'auth'
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'apps.user.serializers.CustomUserModelSerializer',
-    # 'LOGIN_SERIALIZER': 'dj_rest_auth.serializers.LoginSerializer',
     'TOKEN_SERIALIZER': 'dj_rest_auth.serializers.TokenSerializer',
     'JWT_SERIALIZER': 'dj_rest_auth.serializers.JWTSerializer',
+
+
 }
+
+
+REST_AUTH = {
+    # 'JWT_AUTH_COOKIE': None,
+    # 'JWT_AUTH_REFRESH_COOKIE': None,
+    # 'JWT_AUTH_REFRESH_COOKIE_PATH': '/',
+    # 'JWT_AUTH_SECURE': False,
+    # 'JWT_AUTH_HTTPONLY': True,
+    # 'JWT_AUTH_SAMESITE': 'Lax',
+    # 'JWT_AUTH_RETURN_EXPIRATION': False,
+    'JWT_AUTH_COOKIE_USE_CSRF': True,
+    'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': True,
+
+}
+
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
@@ -184,20 +203,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# SITE_ID = 1
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-SITE_ID = 2
-
+SITE_ID = 1
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+# SITE_ID = 2
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL')
+#     )
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
