@@ -61,8 +61,8 @@ INSTALLED_APPS = [
     # LOCAL APPS
     'apps.user',
     'apps.identify',
-    # 'apps.backpack',
-    # 'apps.home',
+    'apps.backpack',
+    'apps.home',
 
 ]
 
@@ -203,20 +203,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-SITE_ID = 1
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-# SITE_ID = 2
-
+# SITE_ID = 1
 # DATABASES = {
-#     'default': dj_database_url.config(
-#         default=os.environ.get('DATABASE_URL')
-#     )
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+SITE_ID = 2
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -265,12 +265,21 @@ JAZZMIN_SETTINGS = {
     ],
     "show_sidebar": True,
     "navigation_expanded": True,
-    # "hide_apps": [
-    #     "auth",
-    #     "social_django",
-    #     "rest_framework_simplejwt",
-    #     "token_blacklist"
-    # ],
+
+    "hide_apps": [
+        "auth",
+        "social_django",
+        "rest_framework_simplejwt",
+        "token_blacklist"
+        "rest_framework.authtoken",
+        "rest_framework",
+        "authtoken",
+        "account",
+        "socialaccount",
+        "sites"
+
+
+    ],
     # "hide_models": [
     #     "cart.CartItem",
     #     "order.OrderItem",

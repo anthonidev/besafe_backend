@@ -1,3 +1,4 @@
+from apps.home.models import HomeGroup
 from django.db import models
 from django.contrib.auth import get_user_model
 from uuid import uuid4
@@ -65,6 +66,8 @@ class Food(models.Model):
         max_length=36,  default=uuid4, primary_key=True, editable=False, verbose_name="ID", blank=True)
     last_update = models.DateField(verbose_name="Last Update", auto_now=True)
     elements = models.ManyToManyField(ElementItem)
+    home_group = models.ForeignKey(
+        HomeGroup, on_delete=models.CASCADE, related_name='food')
 
     class Meta:
         app_label = 'Víveres'
@@ -77,22 +80,10 @@ class Health(models.Model):
         max_length=36,  default=uuid4, primary_key=True, editable=False, verbose_name="ID", blank=True)
     last_update = models.DateField(verbose_name="Last Update", auto_now=True)
     elements = models.ManyToManyField(ElementItem)
+    home_group = models.ForeignKey(
+        HomeGroup, on_delete=models.CASCADE, related_name='health')
 
     class Meta:
         app_label = 'Botiquín'
         verbose_name = "Botiquín"
         verbose_name_plural = "Botiquines"
-
-
-class BackPack(models.Model):
-    id = models.CharField(
-        max_length=36,  default=uuid4, primary_key=True, editable=False, verbose_name="ID", blank=True)
-    food = models.OneToOneField(
-        Food, on_delete=models.CASCADE, related_name='backpack')
-    health = models.OneToOneField(
-        Health, on_delete=models.CASCADE, related_name='backpack')
-
-    class Meta:
-        app_label = 'account'
-        verbose_name = "Mochila"
-        verbose_name_plural = "Mochilas"

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Account, Floor
+from .models import Account
 from django.core.exceptions import ValidationError
 
 
@@ -31,9 +31,3 @@ def validate_account_data(data):
             errors[field] = message
     if errors:
         raise ValidationError(errors)
-
-
-class FloorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Floor
-        fields = ['id', 'number', 'safe_zone', 'picture']

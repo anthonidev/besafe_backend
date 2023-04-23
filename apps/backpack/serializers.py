@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import BackPack, Element, ElementItem, Food, Health
+from .models import Element, ElementItem, Food, Health
 from django.core.exceptions import ValidationError
 
 

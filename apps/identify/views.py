@@ -38,7 +38,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
             except Exception as e:
                 print(e)
-                return Response({'message': 'Ha ocurrido un erro con qulqi, intentalo mas tarde'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'message': 'Ha ocurrido un error  intentalo mas tarde'}, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
         user = self.request.user
